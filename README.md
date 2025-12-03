@@ -60,12 +60,12 @@ Streamlit App → Sends user prompt → n8n Webhook
 
 ## 🔧 Installation & Setup
 
-### 1️⃣ Install dependencies
+**1️⃣ Install dependencies**
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Run the Streamlit app
+**2️⃣ Run the Streamlit app**
 ```bash
 pip install -r requirements.txt
 ```
@@ -73,7 +73,7 @@ pip install -r requirements.txt
 ---
 
 ## 🔗 API Integration
-### Update the webhook URL inside app.py if needed:
+**Update the webhook URL inside app.py if needed:**
 ```python
 requests.post(
     url="https://<your-n8n-instance>/webhook/<webhook-id>",
