@@ -80,3 +80,8 @@ requests.post(
     json={"prompt": prompt}
 )
 ```
+---
+
+## 📹 Demo Video
+**👉 Watch the full workflow demo here:**
+<img width="1919" height="1051" alt="Screenshot 2025-12-03 115614" src="https://github.com/user-attachments/assets/cb9d34a4-b3d9-41ca-9e68-76432c30661e" />
