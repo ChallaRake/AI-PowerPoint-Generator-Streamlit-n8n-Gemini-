@@ -1,0 +1,126 @@
+{
+  "name": "PPT Generation using N8N and Streamlit",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8f21a89c-4878-41b3-8f3a-15c4f3045f1b",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "ae01a8e7-d67b-4863-85f3-27fdc326b7b0",
+      "name": "Webhook",
+      "webhookId": "8f21a89c-4878-41b3-8f3a-15c4f3045f1b"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate Python code that creates a PowerPoint (.pptx) presentation based on the following user-provided content:\n\nContent:\n{{ $json.body.prompt }}\n\nRequirements:\nOutput only Python code, no explanations.\n\nThe code must:\n\n1. Import necessary libraries (e.g., python-pptx).\n2. Create a clean, well-structured PowerPoint presentation.\n3. Generate a proper title slide and multiple content slides.\nspacing).\n4. Automatically format text so that nothing overlaps (use proper placeholders, margins, and bullet points\n5. Wrap or split long text into multiple slides if needed.\n6. Use bullet points for multi-line content.",
+        "options": {
+          "systemMessage": "You are a helpful assistant and you are having 10+ years of experience in creating a PPT based on a given topic"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "e820896c-0c49-4939-8443-bab7a7cd90e3",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        208,
+        208
+      ],
+      "id": "a8b7e881-84c9-482f-9d9d-d53b1991bee0",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "uAiOpPpqhxaTZ6UM",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        528,
+        0
+      ],
+      "id": "09851a5e-6972-42ae-b801-a92995f0ce4a",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {
+    "AI Agent": [
+      {
+        "json": {
+          "output": "```python\nfrom pptx import Presentation\nfrom pptx.util import Inches, Pt\nfrom pptx.enum.text import MSO_AUTO_SIZE\n\ndef add_bullet_point(text_frame, text, level, font_size):\n    \"\"\"Helper function to add a bullet point with specified text, level, and font size.\"\"\"\n    p = text_frame.add_paragraph()\n    p.text = text\n    p.level = level\n    if font_size:\n        p.font.size = Pt(font_size)\n    # Ensure auto-sizing for the text frame to prevent overflow, but mainly handled by paragraph levels.\n    text_frame.auto_size = MSO_AUTO_SIZE.SHAPE_TO_FIT_TEXT\n\n\ndef create_presentation():\n    prs = Presentation()\n\n    # --- Slide 1: Introduction to Agentic AI ---\n    # Using 'Title and Content' layout (usually layout index 1)\n    slide_layout = prs.slide_layouts[1]\n    slide = prs.slides.add_slide(slide_layout)\n    title = slide.shapes.title\n    body = slide.shapes.placeholders[1]\n\n    title.text = \"Introduction to Agentic AI\"\n\n    tf = body.text_frame\n    tf.clear() # Clear any default text in the placeholder\n\n    # Set margins if needed, though placeholders usually have good defaults\n    tf.margin_left = Inches(0.5)\n    tf.margin_top = Inches(0.5)\n    tf.margin_right = Inches(0.5)\n    tf.margin_bottom = Inches(0.5)\n\n    add_bullet_point(tf, \"Definition:\", 0, 24)\n    add_bullet_point(tf, \"AI systems designed to operate autonomously, perceive their environment, make decisions, and take actions to achieve specific goals.\", 1, 20)\n\n    add_bullet_point(tf, \"Key Characteristics:\", 0, 24)\n    add_bullet_point(tf, \"Autonomy: Operate independently without constant human intervention.\", 1, 20)\n    add_bullet_point(tf, \"Perception: Ability to sense and interpret their environment.\", 1, 20)\n    add_bullet_point(tf, \"Reasoning & Planning: Formulate plans and strategies to reach goals.\", 1, 20)\n    add_bullet_point(tf, \"Action: Execute plans through various means (digital or physical).\", 1, 20)\n    add_bullet_point(tf, \"Memory & Learning: Adapt and improve performance over time based on experiences.\", 1, 20)\n    \n    # --- Slide 2: Agentic AI vs. Generative AI ---\n    slide_layout = prs.slide_layouts[1]\n    slide = prs.slides.add_slide(slide_layout)\n    title = slide.shapes.title\n    body = slide.shapes.placeholders[1]\n\n    title.text = \"Agentic AI vs. Generative AI\"\n\n    tf = body.text_frame\n    tf.clear()\n\n    tf.margin_left = Inches(0.5)\n    tf.margin_top = Inches(0.5)\n    tf.margin_right = Inches(0.5)\n    tf.margin_bottom = Inches(0.5)\n\n    add_bullet_point(tf, \"Agentic AI:\", 0, 24)\n    add_bullet_point(tf, \"Focus: Goal-oriented autonomy, decision-making, and interaction.\", 1, 20)\n    add_bullet_point(tf, \"Primary Function: Plan, execute tasks, achieve objectives in dynamic environments.\", 1, 20)\n    add_bullet_point(tf, \"Output: Actions, completed tasks, solutions, strategic decisions.\", 1, 20)\n    add_bullet_point(tf, \"Example: Self-driving cars, intelligent personal assistants.\", 1, 20)\n\n    add_bullet_point(tf, \"Generative AI:\", 0, 24)\n    add_bullet_point(tf, \"Focus: Content creation, pattern recognition, and synthesis.\", 1, 20)\n    add_bullet_point(tf, \"Primary Function: Produce new data (text, images, audio, code) based on learned patterns.\", 1, 20)\n    add_bullet_point(tf, \"Output: Creative content, summaries, translations, synthetic data.\", 1, 20)\n    add_bullet_point(tf, \"Example: ChatGPT, DALL-E, Midjourney.\", 1, 20)\n\n    add_bullet_point(tf, \"Synergy: Agentic AI can leverage Generative AI for communication, content generation for tasks, or internal reasoning.\", 0, 24)\n\n    prs.save(\"Agentic_AI_Presentation.pptx\")\n\n# Call the function to create the presentation\ncreate_presentation()\n```"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "57da4433-cf54-49fe-8ec3-c6ac06e8c91b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ebe0f18b11a8305de4db5baa1c2b11c69c682d807aa200c043e0657e96fd7066"
+  },
+  "id": "h6d6BP648T1zr4sj",
+  "tags": []
+}
