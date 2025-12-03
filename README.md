@@ -15,6 +15,19 @@ Users submit their content through a stylish Streamlit app, which communicates w
 
 ---
 
+## Workflow Nodes Breakdown 🔄
+ 
+**PPT Generation using N8N and Streamlit**
+
+| Node                  | Purpose                                   | Key Details                                                   |
+|-----------------------|-------------------------------------------|---------------------------------------------------------------|
+| Webhook               | Receives prompt from Streamlit app        | Method: POST, handles prompt in request body                  |
+| AI Agent              | Generates Python code for creating PPT    | Uses a system prompt defining formatting rules and slide structure |
+| Google Gemini Chat Model | AI backend for the agent               | Connected as the LLM powering responses                       |
+| Respond to Webhook    | Sends generated code back to Streamlit    | Returns AI-generated PPT script to user                       |
+
+---
+
 ## 🛠️ Tech Stack
 
 | Component | Technology |
