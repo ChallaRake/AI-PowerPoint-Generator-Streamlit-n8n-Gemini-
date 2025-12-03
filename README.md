@@ -84,4 +84,7 @@ requests.post(
 
 ## 📹 Demo Video
 **👉 Watch the full workflow demo here:**
+### [*AI PowerPoint Generator Automation*](https://www.linkedin.com/posts/challa-rakesh-reddy_ai-automation-generativeai-activity-7401875127677939713-EXUW?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD7NTjAB5LIcCGe6w75x6giyS2sV95rQD14)
+
+---
 <img width="1919" height="1051" alt="Screenshot 2025-12-03 115614" src="https://github.com/user-attachments/assets/cb9d34a4-b3d9-41ca-9e68-76432c30661e" />
